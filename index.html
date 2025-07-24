@@ -1,179 +1,239 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>龍之谷 帕德瑪收益試算表</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .input-container {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        label {
-            display: inline-block;
-            width: 220px;
-            font-weight: bold;
-        }
-        input[type="number"] {
-            padding: 8px;
-            width: 200px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        small {
-            display: inline-block;
-            color: #666;
-            margin-top: 5px;
-            font-size: 12px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        #result {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        #verdict {
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 15px;
-            color: #333;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>帕德瑪收益試算表</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Noto+Serif+TC&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Serif TC', serif;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f9f6ef;
+      background-image: url('pic/bg4.jpg');
+      background-size: cover;
+      background-position: center 80px;
+      border-radius: 12px;
+    }
+	.container {
+	  max-width: 800px;
+	  width: 90%;
+	  background-color: rgba(255, 255, 255, 0.92); /* 白色半透明遮罩 */
+	  padding: 30px;
+	  border: 4px solid #3a2e1f;
+	  border-radius: 16px;
+	  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+	}
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      text-align: center;
+      color: #3a2e1f;
+      font-size: 2em;
+    }
+
+    .input-container {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    label {
+      display: inline-block;
+      width: 220px;
+      font-weight: bold;
+    }
+
+    input[type="number"] {
+      padding: 8px;
+      width: 200px;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    small {
+      display: inline-block;
+      color: #666;
+      margin-top: 5px;
+      font-size: 12px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #937341;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #7a5f35;
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: rgba(255,255,255,0.95);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #6c5434;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    #verdict {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 15px;
+      color: #3a2e1f;
+    }
+  </style>
 </head>
 <body>
-    <h1>帕德瑪收益試算表</h1>
-    <div class="input-container">
-        <label>金價 (10000金幣 = ? 龍幣):</label>
-        <input type="number" id="goldPrice" value="17000" min="0" step="1">
-        <br><br>
-        <label>鑰匙價格 (每把 龍幣):</label>
-        <input type="number" id="keyPrice" value="150" min="0" step="1">
-        <br><br>
-        <button onclick="calculate()">計算</button>
-    </div>
+        <div class="container">
+            <h1>
+                帕德瑪收益試算表
+            </h1>
+            <div class="input-container">
+                <label>
+                    金價 (10000金幣 = ? 龍幣):
+                </label>
+                <input type="number" id="goldPrice" value="17000" min="0" step="1">
+                <br>
+                <small>
+                    例如：17000 表示 10000金幣 = 17000龍幣
+                </small>
+                <br>
+                <br>
+                <label>
+                    鑰匙價格 (每把 龍幣):
+                </label>
+                <input type="number" id="keyPrice" value="150" min="0" step="1">
+                <br>
+                <small>
+                    例如：150 表示每把鑰匙 150龍幣
+                </small>
+                <br>
+                <br>
+                <button onclick="calculate()">
+                    計算
+                </button>
+            </div>
+            <div id="result">
+                <h2>
+                    計算結果
+                </h2>
+                <table>
+                    <tr>
+                        <th>
+                            項目
+                        </th>
+                        <th>
+                            數值
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            收益 (龍幣)
+                        </td>
+                        <td id="revenue">
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            成本 (21把鑰匙, 龍幣)
+                        </td>
+                        <td id="cost">
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            淨收益 (龍幣)
+                        </td>
+                        <td id="netProfit">
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            不划算鑰匙價格門檻 (龍幣/把)
+                        </td>
+                        <td id="breakEvenKeyPrice">
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            不划算金價門檻 (龍幣/10000金幣)
+                        </td>
+                        <td id="breakEvenGoldPrice">
+                            -
+                        </td>
+                    </tr>
+                </table>
+                <p id="verdict">
+                </p>
+            </div>
+        </div>
+        <script>
+            function calculate() {
+                const goldPrice = parseFloat(document.getElementById('goldPrice').value);
+                const keyPrice = parseFloat(document.getElementById('keyPrice').value);
 
-    <div id="result">
-        <h2>計算結果</h2>
-        <table>
-            <tr>
-                <th>項目</th>
-                <th>數值</th>
-            </tr>
-            <tr>
-                <td>收益 (龍幣)</td>
-                <td id="revenue">-</td>
-            </tr>
-            <tr>
-                <td>成本 (21把鑰匙, 龍幣)</td>
-                <td id="cost">-</td>
-            </tr>
-            <tr>
-                <td>淨收益 (龍幣)</td>
-                <td id="netProfit">-</td>
-            </tr>
-            <tr>
-                <td>時間效率 (龍幣/分鐘)</td>
-                <td id="timeEfficiency">-</td>
-            </tr>
-            <tr>
-                <td>體力效率 (龍幣/體力)</td>
-                <td id="staminaEfficiency">-</td>
-            </tr>
-            <tr>
-                <td>不划算鑰匙價格門檻 (龍幣/把)</td>
-                <td id="breakEvenKeyPrice">-</td>
-            </tr>
-        </table>
-        <p id="verdict"></p>
-    </div>
+                if (isNaN(goldPrice) || isNaN(keyPrice) || goldPrice <= 0 || keyPrice < 0) {
+                    alert("請輸入有效的金價與鑰匙價格！");
+                    return;
+                }
 
-    <script>
-        function calculate() {
-            const goldPrice = parseFloat(document.getElementById('goldPrice').value);
-            const keyPrice = parseFloat(document.getElementById('keyPrice').value);
+                const goldPerRun = 3300;
+                const keysPerRun = 21;
 
-            if (isNaN(goldPrice) || isNaN(keyPrice) || goldPrice <= 0 || keyPrice < 0) {
-                alert("請輸入有效的金價與鑰匙價格！");
-                return;
+                const goldToDragon = goldPrice / 10000;
+                const revenue = goldPerRun * goldToDragon;
+                const cost = keysPerRun * keyPrice;
+                const netProfit = revenue - cost;
+                const breakEvenKeyPrice = (goldPerRun * goldPrice) / (keysPerRun * 10000);
+                const breakEvenGoldPrice = (cost * 10000) / goldPerRun;
+
+                document.getElementById('revenue').textContent = revenue.toFixed(2) + ' 龍幣';
+                document.getElementById('cost').textContent = cost.toFixed(2) + ' 龍幣';
+                document.getElementById('netProfit').textContent = netProfit.toFixed(2) + ' 龍幣';
+                document.getElementById('breakEvenKeyPrice').textContent = breakEvenKeyPrice.toFixed(2) + ' 龍幣';
+                document.getElementById('breakEvenGoldPrice').textContent = breakEvenGoldPrice.toFixed(0) + ' 龍幣';
+
+                const verdict = netProfit > 0 ? '✅ 目前划算，建議購買「隙縫鑰匙」進行副本！': '⚠️ 不划算，建議等待金價上升或鑰匙降價。';
+                document.getElementById('verdict').textContent = verdict;
             }
 
-            // 固定參數
-            const goldPerRun = 3300;
-            const keysPerRun = 21;
-            const timePerRun = 4;
-            const staminaPerRun = 100;
-
-            // 計算
-            const goldToDragon = goldPrice / 10000;
-            const revenue = goldPerRun * goldToDragon;
-            const cost = keysPerRun * keyPrice;
-            const netProfit = revenue - cost;
-            const timeEfficiency = netProfit / timePerRun;
-            const staminaEfficiency = netProfit / staminaPerRun;
-            const breakEvenKeyPrice = (goldPerRun * goldPrice) / (keysPerRun * 10000);
-
-            // 更新結果
-            document.getElementById('revenue').textContent = revenue.toFixed(2) + ' 龍幣';
-            document.getElementById('cost').textContent = cost.toFixed(2) + ' 龍幣';
-            document.getElementById('netProfit').textContent = netProfit.toFixed(2) + ' 龍幣';
-            document.getElementById('timeEfficiency').textContent = timeEfficiency.toFixed(2) + ' 龍幣/分鐘';
-            document.getElementById('staminaEfficiency').textContent = staminaEfficiency.toFixed(2) + ' 龍幣/體力';
-            document.getElementById('breakEvenKeyPrice').textContent = breakEvenKeyPrice.toFixed(2) + ' 龍幣/把';
-
-            // 建議文字
-            const verdict = netProfit > 0 
-                ? '✅ 目前划算，直接購買「隙縫鑰匙」進行副本！' 
-                : '⚠️ 不划算，建議等待金價或鑰匙價格變動。';
-            document.getElementById('verdict').textContent = verdict;
-        }
-
-        // 初次加載自動計算
-        calculate();
-    </script>
-</body>
+            calculate();
+        </script>
+    </body>
 </html>
